@@ -29,6 +29,7 @@ import mozilla.components.concept.sync.AuthType
 import mozilla.components.concept.sync.OAuthAccount
 import mozilla.components.concept.sync.Profile
 import org.mozilla.fenix.BrowserDirection
+import org.mozilla.fenix.BuildConfig
 import org.mozilla.fenix.Config
 import org.mozilla.fenix.HomeActivity
 import org.mozilla.fenix.R
@@ -163,6 +164,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 getString(R.string.delete_browsing_data_quit_off)
             }
         }
+
+        // Only show telemetry settings if Glean was included
+        val dataChoicePreference =
+            findPreference<Preference>(getPreferenceKey(R.string.pref_key_data_choices))
+        dataChoicePreference?.setVisible(BuildConfig.GLEAN_INCLUDED)
 
         setupPreferences()
 

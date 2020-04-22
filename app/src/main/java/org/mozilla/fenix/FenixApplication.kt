@@ -88,7 +88,12 @@ open class FenixApplication : LocaleAwareApplication() {
     protected fun initializeGlean() {
         val telemetryEnabled = settings().isTelemetryEnabled
 
-        logger.debug("Initializing Glean (uploadEnabled=$telemetryEnabled, isFennec=${Config.channel.isFennec})")
+        if (BuildConfig.GLEAN_INCLUDED) {
+            logger.debug("Initializing Glean (uploadEnabled=$telemetryEnabled, isFennec=${Config.channel.isFennec})")
+        } else {
+            logger.debug("Not initializing Glean")
+            return
+        }
 
         Glean.initialize(
             applicationContext = this,

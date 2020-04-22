@@ -17,6 +17,8 @@ object Config {
     const val minSdkVersion = 21
     const val targetSdkVersion = 28
 
+    const val includeGlean = true
+
     @JvmStatic
     private fun generateDebugVersionName(): String {
         val today = Date()

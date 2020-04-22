@@ -8,6 +8,7 @@ import android.content.Context
 import mozilla.components.service.glean.Glean
 import mozilla.components.service.glean.private.NoExtraKeys
 import mozilla.components.support.base.log.logger.Logger
+import org.mozilla.fenix.BuildConfig
 import org.mozilla.fenix.GleanMetrics.AboutPage
 import org.mozilla.fenix.GleanMetrics.Addons
 import org.mozilla.fenix.GleanMetrics.AppTheme
@@ -518,6 +519,11 @@ class GleanMetricsService(private val context: Context) : MetricsService {
     private val installationPing = InstallationPing(context)
 
     override fun start() {
+        if (BuildConfig.GLEAN_INCLUDED) {
+            logger.debug("Not Enabling Glean.")
+            return
+        }
+
         logger.debug("Enabling Glean.")
         // Initialization of Glean already happened in FenixApplication.
         Glean.setUploadEnabled(true)
@@ -542,6 +548,7 @@ class GleanMetricsService(private val context: Context) : MetricsService {
     }
 
     internal fun setStartupMetrics() {
+
         Metrics.apply {
             defaultBrowser.set(BrowsersCache.all(context).isDefaultBrowser)
             MozillaProductDetector.getMozillaBrowserDefault(context)?.also {

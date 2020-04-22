@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mozilla.components.support.base.log.logger.Logger
+import org.mozilla.fenix.BuildConfig
 import org.mozilla.fenix.GleanMetrics.Activation
 import org.mozilla.fenix.GleanMetrics.Pings
 import java.io.IOException
@@ -177,6 +178,10 @@ class ActivationPing(private val context: Context) {
      * starts.
      */
     fun checkAndSend() {
+        if (BuildConfig.GLEAN_INCLUDED) {
+            Logger.debug("Ignoring ActivationPing - Glean not available")
+            return
+        }
         if (wasAlreadyTriggered()) {
             Logger.debug("ActivationPing - already generated")
             return

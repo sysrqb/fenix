@@ -172,16 +172,19 @@ class Settings private constructor(
     val isTelemetryEnabled by booleanPreference(
         appContext.getPreferenceKey(R.string.pref_key_telemetry),
         default = true
+        // false
     )
 
     val isMarketingTelemetryEnabled by booleanPreference(
         appContext.getPreferenceKey(R.string.pref_key_marketing_telemetry),
         default = true
+        // false
     )
 
     val isExperimentationEnabled by booleanPreference(
         appContext.getPreferenceKey(R.string.pref_key_experimentation),
         default = true
+        // false
     )
 
     private var trackingProtectionOnboardingShownThisSession = false
